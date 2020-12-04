@@ -18,14 +18,14 @@ val colors : Array<Int> = arrayOf(
     "#03A9F4",
     "#009688",
     "#3F51B5",
-    ""
+    "#FF9800"
 ).map {
     Color.parseColor(it)
 }.toTypedArray()
 val backColor : Int = Color.parseColor("#BDBDBD")
 val delay : Long = 20
 val rFactor : Float = 8.9f
-val barFactor : Float = 14.9f
+val barFactor : Float = 10.9f
 
 fun Int.inverse() : Float = 1f / this
 fun Float.maxScale(i : Int, n : Int) : Float = Math.max(0f, this - i * n.inverse())
@@ -45,8 +45,8 @@ fun Canvas.drawPartialCircleRect(scale : Float, w : Float, h : Float, paint : Pa
     save()
     translate(w / 2, h / 2)
     drawRect(RectF(-rSize, -rSize, rSize, rSize), paint)
-    drawCircle(0f, -(h / 2 + r) * (1f - sf3), r * sf2, paint)
-    drawRect(RectF(-size, -size - bar, -size, -size + bar * sf4), paint)
+    drawCircle(size - r, -h / 2 + r +(h / 2 - size -r) * sf3, r * sf2, paint)
+    drawRect(RectF(-size, -size - bar, -size + bar * sf4, -size), paint)
     restore()
 }
 
@@ -171,7 +171,7 @@ class PartialCircleRectView(ctx : Context) : View(ctx) {
         private var dir : Int = 1
 
         fun draw(canvas : Canvas, paint : Paint) {
-            canvas.drawPCRNode(i, state.scale, paint)
+            curr.draw(canvas, paint)
         }
 
         fun update(cb : (Float) -> Unit) {

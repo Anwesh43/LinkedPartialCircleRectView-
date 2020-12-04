@@ -185,4 +185,27 @@ class PartialCircleRectView(ctx : Context) : View(ctx) {
             curr.startUpdating(cb)
         }
     }
+
+    data class Renderer(var view : PartialCircleRectView) {
+
+        private val animator : Animator = Animator(view)
+        private val pcr : PartialCircleRect = PartialCircleRect(0)
+        private val paint : Paint = Paint(Paint.ANTI_ALIAS_FLAG)
+
+        fun render(canvas : Canvas) {
+            canvas.drawColor(backColor)
+            pcr.draw(canvas, paint)
+            animator.animate {
+                pcr.update {
+                    animator.stop()
+                }
+            }
+        }
+
+        fun handleTap() {
+            pcr.startUpdating {
+                animator.start()
+            }
+        }
+    }
 }

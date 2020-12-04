@@ -162,4 +162,27 @@ class PartialCircleRectView(ctx : Context) : View(ctx) {
             return this
         }
     }
+
+    data class PartialCircleRect(var i : Int, val state : State = State()) {
+
+        private var curr : PCRNode = PCRNode(0)
+        private var dir : Int = 1
+
+        fun draw(canvas : Canvas, paint : Paint) {
+            canvas.drawPCRNode(i, state.scale, paint)
+        }
+
+        fun update(cb : (Float) -> Unit) {
+            curr.update {
+                curr = curr.getNext(dir) {
+                    dir *= -1
+                }
+                cb(it)
+            }
+        }
+
+        fun startUpdating(cb : () -> Unit) {
+            curr.startUpdating(cb)
+        }
+    }
 }

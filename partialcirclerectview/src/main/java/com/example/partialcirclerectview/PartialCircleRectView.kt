@@ -210,4 +210,13 @@ class PartialCircleRectView(ctx : Context) : View(ctx) {
             }
         }
     }
+
+    companion object {
+
+        fun create(activity : Activity) : PartialCircleRectView {
+            val view : PartialCircleRectView = PartialCircleRectView(activity)
+            activity.setContentView(view)
+            return view
+        }
+    }
 }

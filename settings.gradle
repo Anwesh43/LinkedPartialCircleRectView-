@@ -1,0 +1,3 @@
+include ':partialcirclerectview'
+include ':app'
+rootProject.name = "LinkedPartialCircleRectView"
